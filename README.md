@@ -88,7 +88,7 @@ Run the full suite from the project root, not from inside `tests/`:
 python -m pytest -v
 ```
 
-The full suite passes with 49+ tests covering the rule-based brain and edge cases.
+The full suite passes with 56 tests covering the rule-based brain and edge cases.
 
 ## Browser note
 
