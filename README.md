@@ -90,7 +90,7 @@ python -m pytest -v
 
 The full suite passes with 56 tests covering the rule-based brain and edge cases.
 
-![Test Cases](./Captures/tests.png)
+![Test Cases](./Captures/tests.jpg)
 
 ## Browser note
 
