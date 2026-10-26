@@ -9,10 +9,10 @@
 
 I directed the design and decision logic myself; AI tools accelerated the mechanical work under my specification.
 
-- **Design and architecture — mine.** I chose the use case, defined the slots and state machine, and specified every edge case the brain must handle before any code was written.
-- **Scaffolding — AI-assisted, I specified.** I used Copilot to generate boilerplate for the brain modules and FastAPI/React setup from detailed specs I wrote, then reviewed and corrected the output.
-- **Tests — I defined, AI drafted.** I designed the test scenarios (including the adversarial cases); Copilot drafted the assertions, which I verified against intended behavior.
-- **Debugging — mine.** I found the bugs through manual adversarial testing (see Section 3); AI helped implement the fixes I'd identified.
+- **Design and architecture: mine.** I chose the use case, defined the slots and state machine, and specified every edge case the brain must handle before any code was written.
+- **Scaffolding: AI-assisted, I specified.** I used Copilot to generate boilerplate for the brain modules and FastAPI/React setup from detailed specs I wrote, then reviewed and corrected the output.
+- **Tests: I defined, AI drafted.** I designed the test scenarios (including the adversarial cases); Copilot drafted the assertions, which I verified against intended behavior.
+- **Debugging: mine.** I found the bugs through manual adversarial testing (see Section 3); AI helped implement the fixes I'd identified.
 
 ## 3. Where they got things wrong
 
