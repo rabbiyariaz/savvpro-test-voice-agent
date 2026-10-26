@@ -3,14 +3,16 @@
 ## 1. Tools used
 
 - **GitHub Copilot:** Code generation for NLU regex, the finite-state machine, FastAPI wrapper, React frontend, and pytest suite.
-- **Claude:** Planning, use-case selection, edge-case design, prompt drafting, and debugging guidance.
+- **Claude Opus 4.8:** Planning, use-case selection, edge-case design, prompt drafting, and debugging guidance.
 
-## 2. How they helped
+## 2. How I used them
 
-- Scaffolded the brain modules and their initial interfaces.
-- Generated the test suite and scenario coverage.
-- Wrote the FastAPI endpoints and React page.
-- Suggested fixes during debugging.
+I directed the design and decision logic myself; AI tools accelerated the mechanical work under my specification.
+
+- **Design and architecture — mine.** I chose the use case, defined the slots and state machine, and specified every edge case the brain must handle before any code was written.
+- **Scaffolding — AI-assisted, I specified.** I used Copilot to generate boilerplate for the brain modules and FastAPI/React setup from detailed specs I wrote, then reviewed and corrected the output.
+- **Tests — I defined, AI drafted.** I designed the test scenarios (including the adversarial cases); Copilot drafted the assertions, which I verified against intended behavior.
+- **Debugging — mine.** I found the bugs through manual adversarial testing (see Section 3); AI helped implement the fixes I'd identified.
 
 ## 3. Where they got things wrong
 
