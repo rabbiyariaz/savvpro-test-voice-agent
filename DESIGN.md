@@ -92,7 +92,6 @@ Adversarial manual testing found several parsing and confirmation bugs; those ca
 
 - Slots stay in machine format for logic: ISO dates and 24-hour times. Reply helpers convert them to speech-friendly forms such as “Thursday, October 29” and “2 PM”.
 - Sessions and bookings use in-memory stores. This is sufficient for an assessment; a deployment needs Redis or a database.
-- The browser Web Speech API provides zero-key STT/TTS. The trade-off is Chrome/Edge support; the text input provides the same booking flow elsewhere.
 
 ## 9. What a production version would add
 
