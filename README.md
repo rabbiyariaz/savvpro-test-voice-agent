@@ -35,19 +35,24 @@ No external API keys are required.
 ```text
 .
 ├── brain/
-│   ├── nlu.py
-│   ├── brain.py
-│   ├── state.py
-│   ├── availability.py
-│   └── cli.py
+│   ├── nlu.py           # text → intent + slots (rules, regex, dateparser)
+│   ├── brain.py         # handle_turn — the finite-state machine
+│   ├── state.py         # Session dataclass + states
+│   ├── availability.py  # fake availability store + nearest-slot logic
+│   └── cli.py           # terminal test loop
 ├── api/
-│   └── main.py
+│   └── main.py          # FastAPI: /turn, /reset, /health
 ├── frontend/
-│   ├── src/
+│   ├── src/             # React app (voice I/O + decision panel)
 │   ├── index.html
 │   ├── package.json
 │   └── vite.config.js
-└── tests/
+├── tests/               # pytest suite (56 cases)
+├── Captures/            # demo screenshots
+├── requirements.txt
+├── README.md
+├── DESIGN.md
+└── AI_USAGE.md
 ```
 
 ## Prerequisites
