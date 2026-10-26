@@ -81,3 +81,9 @@ git push origin candidate-<your-github-username>
 ---
 
 > ⚠️ **Important:** No submissions will be accepted after the deadline.
+
+Run the API server with:
+
+```bash
+uvicorn api.main:app --reload
+```
