@@ -2,7 +2,7 @@
 
 ## 1. Tools used
 
-- **GitHub Copilot** — generated boilerplate and implementation from my specifications: NLU regex patterns, the FSM scaffold, the FastAPI wrapper, the React page, and pytest assertions. I wrote the specs, defined the logic, and reviewed and corrected all output.
+- **GitHub Copilot**: generated boilerplate and implementation from my specifications: NLU regex patterns, the FSM scaffold, the FastAPI wrapper, the React page, and pytest assertions. I wrote the specs, defined the logic, and reviewed and corrected all output.
 - **Claude Opus 4.8:** Planning, use-case selection, edge-case design, prompt drafting, and debugging guidance.
 
 ## 2. How I used them
