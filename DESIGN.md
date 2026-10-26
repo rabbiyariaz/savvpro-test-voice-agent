@@ -40,7 +40,7 @@ The brain is pure Python. The API in `api/main.py` only persists sessions in an 
 The core collection loop is: find the first empty required slot in
 `date`, `time`, `reason`, `patient_name`, `phone`, then ask the question mapped to that slot.
 
-## 5. How the brain decides — the two key mechanisms
+## 5. How the brain decides; the two key mechanisms
 
 ### Slot-filling driven by emptiness
 
@@ -79,7 +79,7 @@ At confirmation, detected slot values are applied before `confirm_no` is handled
 
 ## 7. Testing
 
-The suite contains 56 pytest cases, which is 49+ cases, and each test is named for the scenario it guards.
+The suite contains 56 pytest cases, and each test is named for the scenario it guards.
 Run it from the project root:
 
 ```bash
