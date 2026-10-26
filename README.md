@@ -1,100 +1,103 @@
-# Step-by-Step Guide: How to Fork, Clone, and Submit Your Assessment
+# Sehat Koh Medical Center
 
-**Repository:** https://github.com/savvpro/savvpro-test-voice-agent
+A rule-based voice assistant that books clinic appointments by voice or text. **No LLM is used for any decision; all intent detection, slot filling, and dialogue control are handled by rule-based Python.**
 
----
+## Pipeline
 
-## Step 1: Fork the Repository
-
-1. Go to the repository: https://github.com/savvpro/savvpro-test-voice-agent
-2. Click the **Fork** button in the top-right corner.
-3. This will create a copy of the repository in your GitHub account.
-
----
-
-## Step 2: Clone Your Fork
-
-1. Open your forked repository in your GitHub account.
-2. Click the green **Code** button and copy the URL.
-3. Run the following commands:
-
-```bash
-git clone https://github.com/your-username/savvpro-test-voice-agent.git
-cd savvpro-test-voice-agent
+```text
+Caller speaks → Speech-to-text (browser) → Rule-based Python brain → Text-to-speech (browser) → Caller hears reply
 ```
 
----
+Speech-to-text (STT) and text-to-speech (TTS) use the browser Web Speech API for speech I/O. The appointment brain is implemented entirely with pure Python rules.
 
-## Step 3: Read the Task
+## Features
 
-Open and read **TASK.md** carefully before writing any code.
+- Multi-slot extraction from natural language
+- Mid-call changes to previously provided details
+- Slot validation and follow-up prompts
+- Availability checks with alternative times
+- Confirmation read-back before booking
+- Out-of-scope request handling
+- Voice and text input
+- Live decision panel showing intent, state, and collected slots
 
-- TASK.md URL: https://github.com/savvpro/savvpro-test-voice-agent/blob/main/TASK.md
+## Tech stack
 
----
+- **Backend:** Python with FastAPI
+- **Frontend:** React with Vite
+- **Tests:** pytest
+- **Speech I/O:** Browser Web Speech API for STT/TTS
 
-## Step 4: Create a New Branch
+No external API keys are required.
 
-Branch pattern: `candidate-<your-github-username>`
+## Project structure
 
-```bash
-git checkout -b candidate-<your-github-username>
+```text
+.
+├── brain/
+│   ├── nlu.py
+│   ├── brain.py
+│   ├── state.py
+│   ├── availability.py
+│   └── cli.py
+├── api/
+│   └── main.py
+├── frontend/
+│   ├── src/
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+└── tests/
 ```
 
-**Example:**
-```bash
-git checkout -b candidate-johndoe
-```
+## Prerequisites
 
----
+- Python 3.12 or newer
+- Node.js 18 or newer
 
-## Step 5: Complete the Task
+## Setup and run
 
-Build the full application on your branch.
+Use two terminals from the project root.
 
----
+1. **Start the backend**
 
-## Step 6: Push Your Branch
+   ```bash
+   pip install -r requirements.txt
+   uvicorn api.main:app --reload
+   ```
 
-```bash
-git add .
-git commit -m "feat: complete voice-agent assessment"
-git push origin candidate-<your-github-username>
-```
+   The API runs at [http://localhost:8000](http://localhost:8000).
 
----
+2. **Start the frontend**
 
-## Step 7: Create a Pull Request
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
 
-1. Go to your **forked** repository on GitHub (`https://github.com/your-username/savvpro-test-voice-agent`).
-2. Click **Compare & pull request** (GitHub will show this banner after you push your branch).
-3. Ensure the following settings in the PR form:
-   - **Base repository:** `savvpro/savvpro-test-voice-agent` ← the original repo
-   - **Base branch:** `main`
-   - **Head repository:** `your-username/savvpro-test-voice-agent` ← your fork
-   - **Compare branch:** `candidate-<your-github-username>`
-4. Use the title: `feat: complete voice-agent assessment`
-5. Submit the pull request.
+   The development server runs at [http://localhost:5173](http://localhost:5173).
 
-> 💡 **Tip:** If you don't see the banner, go to the original repo (`savvpro/savvpro-test-voice-agent`), click the **Pull requests** tab, then click **New pull request** → **compare across forks**.
+3. Open [http://localhost:5173](http://localhost:5173) in **Chrome or Edge**. The backend must be running first.
 
----
+## Running tests
 
-> ⚠️ **Important:** No submissions will be accepted after the deadline.
-
-Run the API server with:
+Run the full suite from the project root, not from inside `tests/`:
 
 ```bash
-uvicorn api.main:app --reload
+python -m pytest -v
 ```
 
-## Frontend
+The full suite passes with 49+ tests covering the rule-based brain and edge cases.
 
-The Vite React frontend expects the backend to be running first at
-`http://localhost:8000`.
+## Browser note
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+Voice input uses the Web Speech API, which is supported in Chrome and Edge. In other browsers, the text input provides identical appointment-booking functionality.
+
+## Try it
+
+Start with:
+
+> “Book a follow-up Thursday at 2pm.”
+
+The assistant extracts the appointment details, collects the patient’s name and phone number, reads the booking back for confirmation, and then books the appointment.
