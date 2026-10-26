@@ -24,10 +24,16 @@ function newSessionId() {
 }
 
 function DecisionPanel({ decision }) {
+  const collectedSlots = Object.values(decision.slots || {}).filter(Boolean).length;
+  const totalSlots = Object.keys(SLOT_LABELS).length;
+
   return (
     <aside className="decision-card" aria-live="polite">
       <div className="card-heading">
-        <span className="eyebrow">Live decision</span>
+        <div>
+          <span className="eyebrow">Live decision</span>
+          <h2>Appointment details</h2>
+        </div>
         <span className={`state-pill state-${decision.state.toLowerCase()}`}>
           {decision.state}
         </span>
@@ -42,15 +48,24 @@ function DecisionPanel({ decision }) {
           <dd>{decision.pending_slot ? SLOT_LABELS[decision.pending_slot] : "Nothing"}</dd>
         </div>
       </dl>
-      <h3>Collected slots</h3>
+      <div className="slots-heading">
+        <h3>Collected details</h3>
+        <span>{collectedSlots} of {totalSlots} details collected</span>
+      </div>
+      <div className="progress-track" aria-label={`${collectedSlots} of ${totalSlots} details collected`}>
+        <span style={{ width: `${(collectedSlots / totalSlots) * 100}%` }} />
+      </div>
       <table className="slots-table">
         <tbody>
           {Object.entries(SLOT_LABELS).map(([key, label]) => {
             const value = decision.slots?.[key];
             return (
-              <tr key={key}>
+              <tr className={value ? "slot-filled" : "slot-empty"} key={key}>
                 <th>{label}</th>
-                <td className={value ? "filled" : "empty"}>{value || "Not set"}</td>
+                <td className={value ? "filled" : "empty"}>
+                  <span className="slot-status" aria-hidden="true">{value ? "✓" : "—"}</span>
+                  {value || "Not set"}
+                </td>
               </tr>
             );
           })}
@@ -78,8 +93,11 @@ function Conversation({ entries }) {
         ) : (
           entries.map((entry, index) => (
             <div className={`message message-${entry.role}`} key={`${entry.role}-${index}`}>
-              <span className="message-label">{entry.role === "user" ? "You" : "Assistant"}</span>
-              <p>{entry.text}</p>
+              <span className="message-avatar" aria-hidden="true">{entry.role === "user" ? "You" : "SK"}</span>
+              <div className="message-content">
+                <span className="message-label">{entry.role === "user" ? "You" : "Assistant"}</span>
+                <p>{entry.text}</p>
+              </div>
             </div>
           ))
         )}
@@ -217,9 +235,19 @@ function App() {
     <main className="app-shell">
       <header className="hero">
         <div>
-          <span className="eyebrow">Rule-based voice assistant</span>
-          <h1>Clinic appointment booking</h1>
-          <p>Talk naturally. The assistant collects your details and checks availability.</p>
+          <div className="brand">
+            <span className="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 40 40" role="img">
+                <circle cx="20" cy="20" r="18" />
+                <path d="M17 9h6v8h8v6h-8v8h-6v-8H9v-6h8z" />
+              </svg>
+            </span>
+            <div>
+              <span className="eyebrow">Your trusted care partner</span>
+              <h1>Sehat Koh Medical Center</h1>
+              <p>Book your appointment by voice or text.</p>
+            </div>
+          </div>
         </div>
         <button className="reset-button" onClick={resetCall} disabled={busy}>
           New call / Reset
