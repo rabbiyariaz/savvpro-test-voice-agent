@@ -30,10 +30,10 @@ I directed the design and decision logic myself; AI tools accelerated the mechan
 AI accelerated scaffolding and test generation, but every bug above was found through my own adversarial manual testing, not by the AI.
 I directed the decision logic and edge-case design; the AI implemented to that specification.
 
-## 5. Token usage
+## 5. Token / credit usage
 
-GitHub Copilot is subscription-based and does not expose per-request token counts, so exact Copilot token usage is unavailable. A usage screenshot is attached below.
+This project was built on a GitHub Copilot Student plan, which is credit-based rather than token-metered, so exact per-request token counts are not exposed. Total consumption for the entire project was approximately **14% of the monthly credit allowance** (resets Nov 1), shown below.
 
-**Copilot usage**
+![Copilot credit usage](./Captures/credits.jpg)
 
-Claude usage is reported separately if per-request usage data is available.
+Planning and design guidance used Claude (conversational), which shaped the architecture and edge-case design but produced no committed code.
