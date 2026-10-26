@@ -108,3 +108,18 @@ Start with:
 > “Book a follow-up Thursday at 2pm.”
 
 The assistant extracts the appointment details, collects the patient’s name and phone number, reads the booking back for confirmation, and then books the appointment.
+
+### Scenario 1
+
+![Scenario 1](./Captures/case1_ss1.jpg)
+
+![Scenario 1](./Captures/case1_ss2.jpg)
+
+
+### Scenario 2
+
+![Scenario 2](./Captures/case2_ss1.jpg)
+
+![Scenario 2](./Captures/case2_ss2.jpg)
+
+![Scenario 2](./Captures/case2_ss3.jpg)
