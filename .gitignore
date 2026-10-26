@@ -7,3 +7,5 @@ venv/
 *.key
 frontend/node_modules/
 frontend/dist/
+node_modules/
+dist/
