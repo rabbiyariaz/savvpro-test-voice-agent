@@ -90,6 +90,8 @@ python -m pytest -v
 
 The full suite passes with 56 tests covering the rule-based brain and edge cases.
 
+![Test Cases](./Captures/tests.png)
+
 ## Browser note
 
 Voice input uses the Web Speech API, which is supported in Chrome and Edge. In other browsers, the text input provides identical appointment-booking functionality.
