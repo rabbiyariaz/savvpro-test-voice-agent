@@ -28,6 +28,17 @@ Speech → STT (browser) → NLU (rules) → brain/FSM (rules) → reply templat
 
 The brain is pure Python. The API in `api/main.py` only persists sessions in an in-memory dictionary and delegates each turn to `handle_turn`.
 
+```mermaid
+flowchart LR
+    A[Caller speaks] --> B[STT<br/>browser]
+    B --> C[NLU<br/>rules]
+    C --> D[Brain / FSM<br/>rules]
+    D --> E[Reply template]
+    E --> F[TTS<br/>browser]
+    F --> G[Caller hears reply]
+    G -. repeats each turn .-> A
+```
+
 ## 4. The state machine
 
 - **`GREETING`:** The initial session state; the first usable turn moves it to `COLLECTING`.
@@ -39,6 +50,25 @@ The brain is pure Python. The API in `api/main.py` only persists sessions in an 
 
 The core collection loop is: find the first empty required slot in
 `date`, `time`, `reason`, `patient_name`, `phone`, then ask the question mapped to that slot.
+
+
+```mermaid
+stateDiagram-v2
+    [*] --> GREETING
+    GREETING --> COLLECTING: first turn
+    COLLECTING --> COLLECTING: slot filled / re-prompt
+    COLLECTING --> CHECKING_AVAILABILITY: all slots filled
+    CHECKING_AVAILABILITY --> CONFIRMING: slot free
+    CHECKING_AVAILABILITY --> COLLECTING: taken / offer alternatives
+    CONFIRMING --> CONFIRMING: mid-call slot change
+    CONFIRMING --> BOOKED: confirm yes
+    CONFIRMING --> COLLECTING: change a detail
+    COLLECTING --> CANCELLED: cancel
+    CONFIRMING --> CANCELLED: cancel
+    BOOKED --> [*]
+    CANCELLED --> [*]
+```
+
 
 ## 5. How the brain decides; the two key mechanisms
 
