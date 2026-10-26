@@ -43,7 +43,11 @@ def test_turn_persists_session_across_calls():
     first = post_turn(session_id, "book a checkup on 2030-01-20 at 10am").json()
     second = post_turn(session_id, "Jordan Example").json()
     assert first["decision"]["slots"]["reason"] == "checkup"
+    assert first["decision"]["slots"]["date"] == "2030-01-20"
+    assert first["decision"]["slots"]["time"] == "10:00"
     assert second["decision"]["slots"]["patient_name"] == "Jordan Example"
+    assert second["decision"]["slots"]["date"] == "2030-01-20"
+    assert second["decision"]["slots"]["time"] == "10:00"
     assert second["decision"]["state"] == "COLLECTING"
 
 

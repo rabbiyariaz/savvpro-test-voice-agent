@@ -66,7 +66,7 @@ def test_midcall_change_at_confirmation_updates_time():
     session, reply, decision = turn(session, "actually make it 3pm not 2")
     assert session.current_state == CONFIRMING
     assert session.slots["time"] == "15:00"
-    assert "15:00" in reply
+    assert "3 PM" in reply
     assert decision["intent"] == "change"
 
 

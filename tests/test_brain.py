@@ -1,10 +1,20 @@
 from brain.availability import TAKEN_SLOTS
-from brain.brain import handle_turn
+from brain.brain import handle_turn, speak_date, speak_time
 from brain.state import Session
 
 
 def turn(session, text):
     return handle_turn(session, text)
+
+
+def test_speak_time_formats_human_friendly_values():
+    assert speak_time("14:00") == "2 PM"
+    assert speak_time("09:30") == "9:30 AM"
+    assert speak_time("12:00") == "12 PM"
+
+
+def test_speak_date_formats_weekday_month_and_day():
+    assert speak_date("2026-10-29") == "Thursday, October 29"
 
 
 def test_multi_slot_and_mid_call_change():
@@ -131,7 +141,7 @@ def test_confirming_slot_change_takes_precedence_over_confirm_no():
     session, reply, decision = turn(session, "actually make it 3pm not 2")
     assert session.current_state == "CONFIRMING"
     assert session.slots["time"] == "15:00"
-    assert "15:00" in reply
+    assert "3 PM" in reply
     assert decision["intent"] == "change"
     assert session.awaiting_change_field is False
 

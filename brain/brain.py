@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 from typing import Dict, Tuple
 
 from . import availability
@@ -7,6 +8,18 @@ from .state import (BOOKED, CANCELLED, CHECKING_AVAILABILITY, COLLECTING,
                     CONFIRMING, GOODBYE, GREETING, Session)
 
 REQUIRED = ("date", "time", "reason", "patient_name", "phone")
+
+
+def speak_time(hhmm: str) -> str:
+    value = datetime.strptime(hhmm, "%H:%M")
+    hour = value.hour % 12 or 12
+    suffix = "AM" if value.hour < 12 else "PM"
+    return f"{hour}{f':{value.minute:02d}' if value.minute else ''} {suffix}"
+
+
+def speak_date(iso: str) -> str:
+    value = datetime.strptime(iso, "%Y-%m-%d")
+    return f"{value.strftime('%A, %B')} {value.day}"
 
 
 def _pending(session: Session) -> str | None:
@@ -34,7 +47,7 @@ def _valid_patient_name(value: str) -> bool:
 
 
 def _decision(intent: str, slots: Dict[str, str], session: Session) -> Tuple[Session, Dict]:
-    return session, {"intent": intent, "slots": dict(slots), "state": session.current_state,
+    return session, {"intent": intent, "slots": dict(session.slots), "state": session.current_state,
                      "pending_slot": session.pending_slot}
 
 
@@ -45,11 +58,11 @@ def _confirmation_result(session: Session, intent: str, detected: Dict[str, str]
         session.current_state, session.pending_slot = COLLECTING, "time"
         session, decision = _decision(intent, detected, session)
         return session, (f"We're open 9am to 5pm. The nearest available time is "
-                         f"{alternatives[0]} or {alternatives[1]}."), decision
+                         f"{speak_time(alternatives[0])} or {speak_time(alternatives[1])}."), decision
     if availability.is_free(session.slots["date"], session.slots["time"]):
         session.current_state, session.pending_slot = CONFIRMING, None
         summary = (f"{session.slots['patient_name']} for {session.slots['reason']} on "
-                   f"{session.slots['date']} at {session.slots['time']}, phone "
+                   f"{speak_date(session.slots['date'])} at {speak_time(session.slots['time'])}, phone "
                    f"{session.slots['phone']}. Is that correct?")
         session, decision = _decision(intent, detected, session)
         return session, summary, decision
@@ -57,7 +70,7 @@ def _confirmation_result(session: Session, intent: str, detected: Dict[str, str]
     session.current_state, session.pending_slot = COLLECTING, "time"
     session, decision = _decision(intent, detected, session)
     return session, (f"That time is not available. The nearest available times are "
-                     f"{alternatives[0]} or {alternatives[1]}. Which would you prefer?"), decision
+                     f"{speak_time(alternatives[0])} or {speak_time(alternatives[1])}. Which would you prefer?"), decision
 
 
 def handle_turn(session: Session, text: str):

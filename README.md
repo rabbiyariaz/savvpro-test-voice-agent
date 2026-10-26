@@ -87,3 +87,14 @@ Run the API server with:
 ```bash
 uvicorn api.main:app --reload
 ```
+
+## Frontend
+
+The Vite React frontend expects the backend to be running first at
+`http://localhost:8000`.
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
